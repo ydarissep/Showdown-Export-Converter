@@ -96,7 +96,9 @@ settingsButton.addEventListener("click", () => {
         }
     })
 
-    finalString += "};\n"
+    if(!settings.includes("trainerStructDisable")){
+        finalString += "};\n"
+    }
     
     outputArea.value = finalString
 
