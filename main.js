@@ -28,7 +28,7 @@ document.getElementById("settingsButton").addEventListener("click", () => {
         mon.forEach(line => {
             line = line.trim()
             if(line == mon[0].trim()){
-                name = line.replaceAll(" ", "_").match(/\w+/i)[0].toUpperCase().replace(/_$/, "")
+                name = line.replace(/\s*\(\s*M\s*\)\s*|\s*\(\s*F\s*\)\s*/, "").replaceAll(" ", "_").match(/(\w+)(?!.*\()|\((\w+)/)[0].match(/\w+/)[0].toUpperCase().replace(/_$/, "") // it is what it is ¯\_(ツ)_/¯
                 monString += `        .species = SPECIES_${name},\n`
                 if(/@\s*(.*)/.test(line)){
                     item = line.match(/@\s*(.*)/i)[1].toUpperCase().replaceAll(" ", "_")

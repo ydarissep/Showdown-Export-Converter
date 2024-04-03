@@ -7,7 +7,7 @@ function applySettings(){
         settings = JSON.parse(localStorage.getItem("settings"))
     }
 
-    // checkbox
+    // checkbox input
     ["trainerStructDisable", "evsDisable"].forEach(settingName => {
         if(settings.includes(settingName)){
             applyCheckbox(settingName)
