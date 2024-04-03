@@ -20,8 +20,8 @@ settingsButton.addEventListener("click", () => {
     const teamLines = pasteArea.value.replaceAll("-", "_").replaceAll(/'|!|&/g, "").split(/\n\s*\n/).filter(value => value != "")
     let team = []
     const regex = /@\s*\w+|Ability:|Level:|Happiness:|EVs:|Nature|IVs:|^_\s*\w+/i
-    const index = {"HP": 0, "Atk": 1, "Def": 2, "SpA": 3, "SpD": 4, "Spe": 5}
-    const indexMatch = /HP|Atk|Def|SpA|SpD|Spe/
+    const IVsEVsOrder = ["HP", "Atk", "Def", "Spe", "SpA", "SpD"]
+    const statsRegex = /HP|Atk|Def|Spe|SpA|SpD/
 
     teamLines.forEach(mon => {
         team.push(mon.split("\n"))
@@ -64,7 +64,7 @@ settingsButton.addEventListener("click", () => {
                 let EVs = [0, 0, 0, 0, 0, 0]
                 const matchEVs = line.match(/\d+\s*\w+/g)
                 matchEVs.forEach(EV => {
-                    EVs[index[EV.match(indexMatch)[0]]] = EV.match(/\d+/)[0]
+                    EVs[IVsEVsOrder.indexOf(EV.match(statsRegex)[0])] = EV.match(/\d+/)[0]
                 })
                 monString += `        .ev = TRAINER_PARTY_EVS(${EVs}),\n`.replaceAll(",", ", ")
             }
@@ -75,7 +75,7 @@ settingsButton.addEventListener("click", () => {
                 let IVs = [31, 31, 31, 31, 31, 31]
                 const matchIVs = line.match(/\d+\s*\w+/g)
                 matchIVs.forEach(IV => {
-                    IVs[index[IV.match(indexMatch)[0]]] = IV.match(/\d+/)[0]
+                    IVs[IVsEVsOrder.indexOf(IV.match(statsRegex)[0])] = IV.match(/\d+/)[0]
                 })
                 monString += `        .iv = TRAINER_PARTY_IVS(${IVs}),\n`.replaceAll(",", ", ")
             }
