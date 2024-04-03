@@ -1,0 +1,80 @@
+:root {
+    --theme-color: burlywood;
+    --TYPE_NORMAL: 157, 157, 113;
+    --TYPE_FIRE: 238, 129, 48;
+    --TYPE_WATER: 99, 144, 240;
+    --TYPE_ELECTRIC: 207, 154, 9;
+    --TYPE_GRASS: 98, 161, 61;
+    --TYPE_ICE: 101, 161, 158;
+    --TYPE_FIGHTING: 194, 46, 40;
+    --TYPE_POISON: 160, 64, 160;
+    --TYPE_GROUND: 177, 149, 79;
+    --TYPE_FLYING: 135, 118, 183;
+    --TYPE_PSYCHIC: 229, 85, 125;
+    --TYPE_BUG: 128, 143, 19;
+    --TYPE_ROCK: 184, 160, 56;
+    --TYPE_GHOST: 115, 87, 151;
+    --TYPE_DRAGON: 111, 53, 252;
+    --TYPE_DARK: 112, 87, 70;
+    --TYPE_STEEL: 150, 148, 166;
+    --TYPE_FAIRY: 214, 133, 173;
+    --blue-border: #335796;
+}
+
+body {
+    font-family: 'Roboto Condensed', 'Pragati Narrow', Arial, sans-serif;
+    font-size: 1rem;
+    color: #f1f1f1;
+    background: #1f2023;
+}
+
+.hide {
+    display: none !important;
+}
+
+textarea {
+    resize: none;
+    background: #0a0a0b;
+    color: white;
+    font-size: 1rem;
+}
+
+#pasteArea, #outputArea {
+    margin: 15vh 0 0 15%;
+    width: 70%;
+    height: 70vh;
+}
+
+#pasteAreaButton, #outputAreaButton {
+    margin: max(3vh, 50px) 0px 0px 50%;
+    width: 7vw;
+    height: 3vh;
+    min-width: 100px;
+    min-height: 50px;
+    position: absolute;
+    transform: translate(-50%, -50%);
+}
+
+#settingsContainer {
+    text-align: center;
+}
+
+#trainerStructInput {
+    width: 25%;
+}
+
+#trainerStructName {
+    width: 15%;
+}
+
+.required::placeholder {
+    color: red;
+}
+
+#settingsButton{
+    margin-top: max(3vh, 25px);
+    width: 7vw;
+    height: 3vh;
+    min-width: 50px;
+    min-height: 25px;
+}
