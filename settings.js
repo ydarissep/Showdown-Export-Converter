@@ -36,7 +36,7 @@ function applyCheckbox(settingName){
     changeSetting(settingName, settingEl.checked)
 
     for(const el of settingEl.closest("fieldset").children){
-        if(el.tagName !== "legend" && !el.querySelector(`#${settingName}`)){
+        if(el.tagName !== "LEGEND" && !el.querySelector(`#${settingName}`)){
             if(settings.includes(settingName)){
                 el.classList.add("hide")
             }
