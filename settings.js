@@ -1,8 +1,4 @@
 window.settings = []
-const trainerStructInput = document.getElementById("trainerStructInput")
-const trainerStructName = document.getElementById("trainerStructName")
-const trainerStructDisable = document.getElementById("trainerStructDisable")
-
 
 applySettings()
 
@@ -11,29 +7,17 @@ function applySettings(){
         settings = JSON.parse(localStorage.getItem("settings"))
     }
 
-    if(settings.includes("trainerStructDisable")){
-        trainerStructDisable.checked = true
-        trainerStructInput.classList.add("hide")
-        trainerStructName.classList.add("hide")
-    }
-    else{
-        trainerStructDisable.checked = false
-        trainerStructInput.classList.remove("hide")
-        trainerStructName.classList.remove("hide")
-    }
-}
+    // checkbox
+    ["trainerStructDisable", "evsDisable"].forEach(settingName => {
+        if(settings.includes(settingName)){
+            applyCheckbox(settingName)
+        }
 
-document.getElementById("trainerStructDisable").addEventListener("change", () => {
-    changeSetting("trainerStructDisable", trainerStructDisable.checked)
-    if(trainerStructDisable.checked){
-        trainerStructInput.classList.add("hide")
-        trainerStructName.classList.add("hide")
-    }
-    else{
-        trainerStructInput.classList.remove("hide")
-        trainerStructName.classList.remove("hide")
-    }
-})
+        document.getElementById(settingName).addEventListener("change", () => {
+            applyCheckbox(settingName)
+        })
+    })
+}
 
 function changeSetting(setting, enable = false){
     if(enable){
@@ -45,4 +29,20 @@ function changeSetting(setting, enable = false){
         settings = settings.filter(value => value != setting)
     }
     localStorage.setItem("settings", JSON.stringify(settings))
+}
+
+function applyCheckbox(settingName){
+    const settingEl = document.getElementById(settingName)
+    changeSetting(settingName, settingEl.checked)
+
+    for(const el of settingEl.closest("fieldset").children){
+        if(el.tagName !== "legend" && !el.querySelector(`#${settingName}`)){
+            if(settings.includes(settingName)){
+                el.classList.add("hide")
+            }
+            else{
+                el.classList.remove("hide")
+            }
+        }
+    }
 }

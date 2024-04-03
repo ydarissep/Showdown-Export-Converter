@@ -40,9 +40,9 @@ textarea {
 }
 
 #pasteArea, #outputArea {
-    margin: 15vh 0 0 15%;
+    margin: 5vh 0 0 15%;
     width: 70%;
-    height: 70vh;
+    height: 75vh;
 }
 
 #pasteAreaButton, #outputAreaButton {
@@ -77,4 +77,18 @@ textarea {
     height: 3vh;
     min-width: 50px;
     min-height: 25px;
+}
+
+fieldset{
+    display:-webkit-flex;
+    -webkit-justify-content:center;
+
+    display:flex;
+    justify-content:center;
+
+}
+
+fieldset span{
+    -webkit-flex:1;
+    flex:1;
 }

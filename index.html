@@ -32,14 +32,30 @@
   </div>
 
   <div id="settingsContainer" class="hide">
-    <div id="createTrainerStructContainer">
+    <fieldset id="createTrainerStructContainer">
+      <legend for="createTrainerStructContainer">Trainer struct</legend>
       <input type="text" id="trainerStructInput" value="static const struct TrainerMon sParty_" autocomplete="off">
       <input type="text" id="trainerStructName" placeholder="Trainer's name" autocomplete="off">
       <span>
-        <input type="checkbox" id="trainerStructDisable">
         <label for="trainerStructDisable">Disable</label>
+        <input type="checkbox" id="trainerStructDisable">
       </span>
-    </div>
+    </fieldset>
+    <fieldset id="evsSettingsContainer">
+      <legend for="evsSettingsContainer">EVs settings</legend>
+      <span id="evsOrderContainer">
+        <label for="evsOrder">Order:</label>
+        <input type="text" id="evsOrder">
+      </span>
+      <span id="evsOutputContainer">
+        <label for="evsOutput">Output:</label>
+        <input type="text" id="evsOutput">
+      </span>
+      <span>
+        <label for="evsDisable">Disable</label>
+        <input type="checkbox" id="evsDisable">
+      </span>
+    </fieldset>
     <div>
       <button id="settingsButton">OK</button>
     </div>
