@@ -10,7 +10,7 @@ document.getElementById("settingsButton").addEventListener("click", () => {
     if(!stop){
         const teamLines = document.getElementById("pasteArea").value.replaceAll("-", "_").replaceAll(/'|!|&/g, "").split(/\n\s*\n/).filter(value => value != "")
         let team = []
-        //const regex = /@\s*\w+|Ability:|Level:|Happiness:|EVs:|Nature|IVs:|^_\s*\w+/i
+        const regex = /@\s*\w+|Ability:|Level:|Happiness:|EVs:|Nature|IVs:|^_\s*\w+/i
         const IVsEVsOrder = ["HP", "Atk", "Def", "Spe", "SpA", "SpD"]
         const statsRegex = /HP|Atk|Def|Spe|SpA|SpD/
 
@@ -19,7 +19,7 @@ document.getElementById("settingsButton").addEventListener("click", () => {
         })
 
         let finalString = ""
-        if(!settings["checkbox"].includes("trainerStructDisable")){
+        if(!SEC["checkbox"].includes("trainerStructDisable")){
             finalString = `${trainerStructInput.value.trim()}${trainerStructName.value.trim()}[] = {\n`
         }
 
@@ -88,7 +88,7 @@ document.getElementById("settingsButton").addEventListener("click", () => {
             }
         })
 
-        if(!settings["checkbox"].includes("trainerStructDisable")){
+        if(!SEC["checkbox"].includes("trainerStructDisable")){
             finalString += "};\n"
         }
         
