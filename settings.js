@@ -1,10 +1,10 @@
 function applySettings(){
-    if(localStorage.getItem("SEC")){
-        SEC = JSON.parse(localStorage.getItem("SEC"))
+    if(localStorage.getItem("SECsettings")){
+        settings = JSON.parse(localStorage.getItem("SECsettings"))
     }
 
     try{
-        SEC["checkbox"].forEach(settingName => {
+        settings["checkbox"].forEach(settingName => {
             applyCheckbox(settingName)
         })
 
@@ -17,22 +17,22 @@ function applySettings(){
         })
     }
     catch{
-        localStorage.removeItem("SEC")
-        SEC = defaultSettings
-        localStorage.setItem("SEC", JSON.stringify(SEC))
+        localStorage.removeItem("SECsettings")
+        settings = defaultSettings
+        localStorage.setItem("SECsettings", JSON.stringify(settings))
     }
 }
 
 function changeSetting(setting, enable = false, key){
     if(enable){
-        if(!SEC[key].includes(setting)){
-            SEC[key].push(setting)
+        if(!settings[key].includes(setting)){
+            settings[key].push(setting)
         }
     }
     else{
-        SEC[key] = SEC[key].filter(value => value != setting)
+        settings[key] = settings[key].filter(value => value != setting)
     }
-    localStorage.setItem("SEC", JSON.stringify(SEC))
+    localStorage.setItem("SECsettings", JSON.stringify(settings))
 }
 
 function applyCheckbox(settingName){
@@ -41,7 +41,7 @@ function applyCheckbox(settingName){
 
     for(const el of settingEl.closest("fieldset").children){
         if(el.tagName !== "LEGEND" && !el.querySelector(`#${settingName}`)){
-            if(SEC["checkbox"].includes(settingName)){
+            if(settings["checkbox"].includes(settingName)){
                 el.classList.add("hide")
             }
             else{
@@ -53,6 +53,6 @@ function applyCheckbox(settingName){
 
 const defaultSettings = {"checkbox": []}
 
-window.SEC = defaultSettings
+window.settings = defaultSettings
 
 applySettings()
