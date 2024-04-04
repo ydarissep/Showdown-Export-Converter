@@ -5,14 +5,17 @@ function applySettings(){
 
     try{
         settings["checkbox"].forEach(settingName => {
-            applyCheckbox(settingName)
+            applyCheckbox(settingName, true, "checkbox")
         })
 
         document.querySelectorAll('input[type="checkbox"]').forEach(checkbox => {
             if(checkbox.id){
                 checkbox.addEventListener("change", () => {
-                    applyCheckbox(checkbox.id)                
+                    applyCheckbox(checkbox.id, checkbox.checked, "checkbox")
                 })
+                if(settings["checkbox"].includes(checkbox.id)){
+                    checkbox.checked = true
+                }
             }
         })
     }
@@ -47,9 +50,9 @@ function changeSetting(setting, enable = false, key){
     localStorage.setItem("SECsettings", JSON.stringify(settings))
 }
 
-function applyCheckbox(settingName){
+function applyCheckbox(settingName, enable = false, key){
     const settingEl = document.getElementById(settingName)
-    changeSetting(settingName, settingEl.checked, "checkbox")
+    changeSetting(settingName, enable, "checkbox")
 
     for(const el of settingEl.closest("fieldset").children){
         if(el.tagName !== "LEGEND" && !el.querySelector(`#${settingName}`)){
