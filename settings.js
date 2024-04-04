@@ -66,12 +66,14 @@ function applyCheckbox(settingName, enable = false, key){
     }
 }
 
+// setting name for blank output if absent: Auto Default
+
 const defaultSettings = {
 "checkbox": [], 
 "input": {
-"evsOrder": ["HP", "Atk", "Def", "Spe", "SpA", "SpD"], 
-"evsOutput": ".ev = TRAINER_PARTY_EVS(${evs})", 
-"natureOutput": ".nature = NATURE_${nature}"}}
+    "evsOrder": ["HP", "Atk", "Def", "Spe", "SpA", "SpD"], 
+    "evsOutput": ".ev = TRAINER_PARTY_EVS(${evs})", 
+    "natureOutput": ".nature = NATURE_${nature}"}}
 
 window.settings = defaultSettings
 
