@@ -1,4 +1,6 @@
-window.settings = []
+const defaultSettings = {"checkbox": []}
+
+window.settings = defaultSettings
 
 applySettings()
 
@@ -7,37 +9,44 @@ function applySettings(){
         settings = JSON.parse(localStorage.getItem("settings"))
     }
 
-    // checkbox input
-    ["trainerStructDisable", "evsDisable"].forEach(settingName => {
-        if(settings.includes(settingName)){
-            applyCheckbox(settingName)
-        }
+    try{
+        // checkbox input
+        ["trainerStructDisable", "evsDisable"].forEach(settingName => {
+            if(settings["checkbox"].includes(settingName)){
+                applyCheckbox(settingName)
+            }
 
-        document.getElementById(settingName).addEventListener("change", () => {
-            applyCheckbox(settingName)
+            document.getElementById(settingName).addEventListener("change", () => {
+                applyCheckbox(settingName)
+            })
         })
-    })
+    }
+    catch{
+        localStorage.removeItem("settings")
+        settings = defaultSettings
+        localStorage.setItem("settings", JSON.stringify(settings))
+    }
 }
 
-function changeSetting(setting, enable = false){
+function changeSetting(setting, enable = false, key){
     if(enable){
-        if(!settings.includes(setting)){
-            settings.push(setting)
+        if(!settings[key].includes(setting)){
+            settings[key].push(setting)
         }
     }
     else{
-        settings = settings.filter(value => value != setting)
+        settings[key] = settings[key].filter(value => value != setting)
     }
     localStorage.setItem("settings", JSON.stringify(settings))
 }
 
 function applyCheckbox(settingName){
     const settingEl = document.getElementById(settingName)
-    changeSetting(settingName, settingEl.checked)
+    changeSetting(settingName, settingEl.checked, "checkbox")
 
     for(const el of settingEl.closest("fieldset").children){
         if(el.tagName !== "LEGEND" && !el.querySelector(`#${settingName}`)){
-            if(settings.includes(settingName)){
+            if(settings["checkbox"].includes(settingName)){
                 el.classList.add("hide")
             }
             else{

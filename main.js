@@ -10,7 +10,7 @@ document.getElementById("settingsButton").addEventListener("click", () => {
     })
 
     let finalString = ""
-    if(!settings.includes("trainerStructDisable")){
+    if(!settings["checkbox"].includes("trainerStructDisable")){
         if(trainerStructName.value.trim() == ""){
             required(trainerStructName)
             return
@@ -85,7 +85,7 @@ document.getElementById("settingsButton").addEventListener("click", () => {
         }
     })
 
-    if(!settings.includes("trainerStructDisable")){
+    if(!settings["checkbox"].includes("trainerStructDisable")){
         finalString += "};\n"
     }
     
