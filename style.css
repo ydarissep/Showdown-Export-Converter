@@ -32,7 +32,7 @@ body {
     display: none !important;
 }
 
-textarea {
+textarea, input[type="text"] {
     resize: none;
     background: #0a0a0b;
     color: white;
