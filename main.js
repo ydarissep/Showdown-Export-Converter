@@ -57,7 +57,7 @@ document.getElementById("settingsButton").addEventListener("click", () => {
                         const index = IVsEVsOrder.indexOf(ev.match(statsRegex)[0])
                         evs[index] = ev.match(/\d+/)[0]
                     })
-                    monString += `        ${document.getElementById("evsOutput").value.replace("${evs}", evs)},\n`
+                    monString += `        ${document.getElementById("evsOutput").value.replace("${evs}", `${evs}`.replaceAll(",", ", "))},\n`
                 }
                 else if(/Nature/.test(line)){
                     nature = line.match(/\w+/)[0].toUpperCase()
@@ -69,14 +69,14 @@ document.getElementById("settingsButton").addEventListener("click", () => {
                         const index = IVsEVsOrder.indexOf(iv.match(statsRegex)[0])
                         ivs[index] = iv.match(/\d+/)[0]
                     })
-                    monString += `        .iv = TRAINER_PARTY_IVS(${ivs}),\n`
+                    monString += `        .iv = TRAINER_PARTY_IVS(${`${ivs}`.replaceAll(",", ", ")}),\n`
                 }
                 else if(/^_\s*\w+/.test(line)){
                     moves.push(`MOVE_${line.replaceAll(" ", "_").match(/^_*(\w+)/)[1].toUpperCase()}`)
                 }
             })
             if(moves.length > 0){
-                monString += `        .moves = {${moves}},\n`
+                monString += `        .moves = {${`${moves}`.replaceAll(",", ", ")}},\n`
             }
             if(checkSpecies){
                 monString = monString.replace(/,\s*\n$/, "\n")
