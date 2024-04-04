@@ -17,9 +17,21 @@ function applySettings(){
         })
     }
     catch{
-        localStorage.removeItem("SECsettings")
-        settings = defaultSettings
+        settings["checkbox"] = defaultSettings["checkbox"]
         localStorage.setItem("SECsettings", JSON.stringify(settings))
+        applySettings()
+    }
+    try{
+        Object.keys(settings["input"]).forEach(key => {
+            if(document.getElementById(key)){
+                document.getElementById(key).value = settings["input"][key]
+            }
+        })
+    }
+    catch{
+        settings["input"] = defaultSettings["input"]
+        localStorage.setItem("SECsettings", JSON.stringify(settings))
+        applySettings()
     }
 }
 
@@ -51,7 +63,7 @@ function applyCheckbox(settingName){
     }
 }
 
-const defaultSettings = {"checkbox": []}
+const defaultSettings = {"checkbox": [], "input": {"evsOrder": ["HP", "Atk", "Def", "Spe", "SpA", "SpD"], "evsOutput": ".ev = TRAINER_PARTY_EVS(${evs})", "natureOutput": ".nature = NATURE_${nature}"}}
 
 window.settings = defaultSettings
 

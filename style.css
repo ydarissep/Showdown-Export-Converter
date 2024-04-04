@@ -67,6 +67,10 @@ textarea {
     width: 15%;
 }
 
+#evsOrder, #evsOutput, #natureOutput {
+    width: 50%;
+}
+
 .required::placeholder {
     color: red;
 }

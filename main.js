@@ -57,11 +57,11 @@ document.getElementById("settingsButton").addEventListener("click", () => {
                         const index = IVsEVsOrder.indexOf(ev.match(statsRegex)[0])
                         evs[index] = ev.match(/\d+/)[0]
                     })
-                    monString += `        .ev = TRAINER_PARTY_EVS(${evs}),\n`.replaceAll(",", ", ")
+                    monString += `        ${document.getElementById("evsOutput").value.replace("${evs}", evs)},\n`
                 }
                 else if(/Nature/.test(line)){
                     nature = line.match(/\w+/)[0].toUpperCase()
-                    monString += `        .nature = NATURE_${nature},\n`
+                    monString += `        ${document.getElementById("natureOutput").value.replace("${nature}", nature)},\n`
                 }
                 else if(/IVs:/.test(line)){
                     const matchIVs = line.match(/\d+\s*\w+/g)
@@ -69,14 +69,14 @@ document.getElementById("settingsButton").addEventListener("click", () => {
                         const index = IVsEVsOrder.indexOf(iv.match(statsRegex)[0])
                         ivs[index] = iv.match(/\d+/)[0]
                     })
-                    monString += `        .iv = TRAINER_PARTY_IVS(${ivs}),\n`.replaceAll(",", ", ")
+                    monString += `        .iv = TRAINER_PARTY_IVS(${ivs}),\n`
                 }
                 else if(/^_\s*\w+/.test(line)){
                     moves.push(`MOVE_${line.replaceAll(" ", "_").match(/^_*(\w+)/)[1].toUpperCase()}`)
                 }
             })
             if(moves.length > 0){
-                monString += `        .moves = {${moves}},\n`.replaceAll(",", ", ")
+                monString += `        .moves = {${moves}},\n`
             }
             if(checkSpecies){
                 monString = monString.replace(/,\s*\n$/, "\n")
@@ -100,6 +100,12 @@ document.getElementById("settingsButton").addEventListener("click", () => {
         document.getElementById("settingsContainer").querySelectorAll('input[required]').forEach(el => {
             el.value = ""
             el.classList.remove("required")
+        })
+        document.getElementById("settingsContainer").querySelectorAll('input[type="text"]:not([required])').forEach(el => {
+            if(el.id){
+                settings["input"][el.id] = el.value
+                localStorage.setItem("SECsettings", JSON.stringify(settings))
+            }
         })
     }
 })
