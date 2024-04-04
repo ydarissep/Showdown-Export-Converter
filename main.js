@@ -58,7 +58,7 @@ document.getElementById("settingsButton").addEventListener("click", () => {
             }
             else if(/Nature/.test(line)){
                 nature = line.match(/\w+/)[0].toUpperCase()
-                monString += `        .nature = TRAINER_PARTY_NATURE(NATURE_${nature}),\n`
+                monString += `        .nature = NATURE_${nature},\n`
             }
             else if(/IVs:/.test(line)){
                 const matchIVs = line.match(/\d+\s*\w+/g)

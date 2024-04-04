@@ -1,24 +1,19 @@
-const defaultSettings = {"checkbox": []}
-
-window.settings = defaultSettings
-
-applySettings()
-
 function applySettings(){
     if(localStorage.getItem("settings")){
         settings = JSON.parse(localStorage.getItem("settings"))
     }
 
     try{
-        // checkbox input
-        ["trainerStructDisable", "evsDisable"].forEach(settingName => {
-            if(settings["checkbox"].includes(settingName)){
-                applyCheckbox(settingName)
-            }
+        settings["checkbox"].forEach(settingName => {
+            applyCheckbox(settingName)
+        })
 
-            document.getElementById(settingName).addEventListener("change", () => {
-                applyCheckbox(settingName)
-            })
+        document.querySelectorAll('input[type="checkbox"]').forEach(checkbox => {
+            if(checkbox.id){
+                checkbox.addEventListener("change", () => {
+                    applyCheckbox(checkbox.id)                
+                })
+            }
         })
     }
     catch{
@@ -55,3 +50,9 @@ function applyCheckbox(settingName){
         }
     }
 }
+
+const defaultSettings = {"checkbox": []}
+
+window.settings = defaultSettings
+
+applySettings()
