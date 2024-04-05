@@ -127,7 +127,8 @@ const defaultSettings = {
 "-Alola": "_ALOLAN"
 "-Galar": "_GALARIAN"
 "-Hisui": "_HISUIAN"
-"-Paldea": "_PALDEAN"`}
+"-Paldea": "_PALDEAN"
+"-Mega": ""`}
 }
 
 window.settings = defaultSettings

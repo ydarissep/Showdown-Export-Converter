@@ -120,8 +120,8 @@ document.getElementById("settingsButton").addEventListener("click", () => {
 function handleName(line){
     if(!document.getElementById("nameDisable").classList.contains("clicked")){
         settings["replace"]["nameReplace"].split("\n").forEach(string => {
-            if(/".+"\s*:\s*".+"/.test(string)){
-                const stringMatch = string.replaceAll("-", "_").match(/"(.+)"\s*:\s*"(.+)"/)
+            if(/".+"\s*:\s*".*"/.test(string)){
+                const stringMatch = string.replaceAll("-", "_").match(/"(.+)"\s*:\s*"(.*)"/)
                 const regex = new RegExp(stringMatch[1], "i")
                 if(line.includes(stringMatch[1])){
                     line = line.replace(regex, stringMatch[2])
