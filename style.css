@@ -1,5 +1,5 @@
 :root {
-    --theme-color: burlywood;
+    --theme-color: darkgray;
     --TYPE_NORMAL: 157, 157, 113;
     --TYPE_FIRE: 238, 129, 48;
     --TYPE_WATER: 99, 144, 240;
@@ -32,11 +32,32 @@ body {
     display: none !important;
 }
 
+button[type="button"]{
+    background: rgba(128, 127, 139, 0.01);
+    outline: none;
+    padding: 8px;
+    border: 2px solid var(--blue-border);
+    border-radius: 12px;
+    font-weight: 700;
+    color: #f1f1f1;
+    cursor: pointer;
+}
+
+button[type='button']:hover {
+    background: rgba(255, 255, 255, 0.25);
+}
+
+.clicked {
+    background: rgba(255, 255, 255, 0.125) !important;
+}
+
 textarea, input[type="text"] {
     resize: none;
     background: #0a0a0b;
     color: white;
     font-size: 1.1rem;
+    font-family: Arial;
+    border: 2px solid black;
 }
 
 #pasteArea, #outputArea {
@@ -59,6 +80,11 @@ textarea, input[type="text"] {
     text-align: center;
 }
 
+fieldset span:last-child {
+    width: 25%;
+    flex: none;
+    -webkit-flex: none;
+}
 
 #trainerStructName {
     width: 15%;
@@ -90,7 +116,7 @@ fieldset{
 
     display:flex;
     justify-content:center;
-
+    border: 1px solid var(--theme-color);
 }
 
 fieldset span{

@@ -4,23 +4,23 @@ function applySettings(){
     }
 
     try{
-        settings["checkbox"].forEach(settingName => {
-            applyCheckbox(settingName, true, "checkbox")
+        settings["button"].forEach(settingName => {
+            clickButton(settingName)
         })
 
-        document.querySelectorAll('input[type="checkbox"]').forEach(checkbox => {
-            if(checkbox.id){
-                checkbox.addEventListener("change", () => {
-                    applyCheckbox(checkbox.id, checkbox.checked, "checkbox")
+        document.querySelectorAll('button[type="button"]').forEach(button => {
+            if(button.id){
+                button.addEventListener("click", () => {
+                    clickButton(button.id)
                 })
-                if(settings["checkbox"].includes(checkbox.id)){
-                    checkbox.checked = true
+                if(settings["button"].includes(button.id)){
+                    button.classList.add("clicked")
                 }
             }
         })
     }
     catch{
-        settings["checkbox"] = defaultSettings["checkbox"]
+        settings["button"] = defaultSettings["button"]
         localStorage.setItem("SECsettings", JSON.stringify(settings))
         applySettings()
     }
@@ -55,24 +55,27 @@ function changeSetting(setting, enable = false, key){
     localStorage.setItem("SECsettings", JSON.stringify(settings))
 }
 
-function applyCheckbox(settingName, enable = false, key){
+function clickButton(settingName){
     const settingEl = document.getElementById(settingName)
-    changeSetting(settingName, enable, "checkbox")
+    settingEl.classList.toggle("clicked")
+    changeSetting(settingName, settingEl.classList.contains("clicked"), "button")
 
-    for(const el of settingEl.closest("fieldset").children){
-        if(el.tagName !== "LEGEND" && !el.querySelector(`#${settingName}`)){
-            if(settings["checkbox"].includes(settingName)){
-                el.classList.add("hide")
-            }
-            else{
-                el.classList.remove("hide")
+    if(settingEl.classList.contains("disable")){
+        for(const el of settingEl.closest("fieldset").getElementsByTagName("*")){
+            if(el.tagName !== "LEGEND" && !el.querySelector(`#${settingName}`) && el.id !== settingName){
+                if(settings["button"].includes(settingName)){
+                    el.classList.add("hide")
+                }
+                else{
+                    el.classList.remove("hide")
+                }
             }
         }
     }
 }
 
 const defaultSettings = {
-"checkbox": [], 
+"button": [], 
 "input": {
     "nameOutput": ".species = SPECIES_${name}",
     "evsOrder": ["HP", "Atk", "Def", "Spe", "SpA", "SpD"], 

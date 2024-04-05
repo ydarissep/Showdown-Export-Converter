@@ -16,7 +16,7 @@ document.getElementById("settingsButton").addEventListener("click", () => {
         })
 
         let finalString = ""
-        if(!settings["checkbox"].includes("trainerStructDisable")){
+        if(!settings["button"].includes("trainerStructDisable")){
             finalString = `${trainerStructInput.value.trim()}${trainerStructName.value.trim()}[] = {\n`
         }
 
@@ -76,7 +76,7 @@ document.getElementById("settingsButton").addEventListener("click", () => {
             finalString += monString
         })
 
-        if(!settings["checkbox"].includes("trainerStructDisable")){
+        if(!settings["button"].includes("trainerStructDisable")){
             finalString += "};\n"
         }
         
@@ -137,90 +137,126 @@ document.getElementById("outputAreaButton").addEventListener("click", () => {
 
 
 function handleName(line){
-    let name = line.replace(/\s*\(\s*M\s*\)\s*|\s*\(\s*F\s*\)\s*/i, "").replaceAll(/\s/g, "_").match(/(\w+)(?!.*\()|\((\w+)/)[0].match(/\w+/)[0].toUpperCase().replace(/_$/, "") // it is what it is ¯\_(ツ)_/¯
-    return `        ${document.getElementById("nameOutput").value.replace("${name}", name)},\n`
+    if(!document.getElementById("nameDisable").classList.contains("clicked")){
+        let name = line.replace(/\s*\(\s*M\s*\)\s*|\s*\(\s*F\s*\)\s*/i, "").replaceAll(/\s/g, "_").match(/(\w+)(?!.*\()|\((\w+)/)[0].match(/\w+/)[0].toUpperCase().replace(/_$/, "") // it is what it is ¯\_(ツ)_/¯
+        return `        ${document.getElementById("nameOutput").value.replace("${name}", name)},\n`
+    }
+    return ""
 }
 
 function handleNickname(line){
-    let nickname = line.match(/^\s*(.*)\s*(?!\(\s*M\s*\)|\(\s*F\s*\))(?=\()/i)[1].replace(/\s$/, "")
-    return `        ${document.getElementById("nicknameOutput").value.replace("${nickname}", nickname)},\n`
+    if(!document.getElementById("nicknameDisable").classList.contains("clicked")){
+        let nickname = line.match(/^\s*(.*)\s*(?!\(\s*M\s*\)|\(\s*F\s*\))(?=\()/i)[1].replace(/\s$/, "")
+        return `        ${document.getElementById("nicknameOutput").value.replace("${nickname}", nickname)},\n`
+    }
+    return ""
 }
 
 function handleItem(line){
-    let item = line.match(/@\s*(.*)/i)[1].toUpperCase().replaceAll(/\s/g, "_")
-    return `        ${document.getElementById("itemOutput").value.replace("${item}", item)},\n`
+    if(!document.getElementById("itemDisable").classList.contains("clicked")){
+        let item = line.match(/@\s*(.*)/i)[1].toUpperCase().replaceAll(/\s/g, "_")
+        return `        ${document.getElementById("itemOutput").value.replace("${item}", item)},\n`
+    }
+    return ""
 }
 
 function handleGender(line){
-    let gender = line.match(/\(\s*M\s*\)|\(\s*F\s*\)/i)[0].toUpperCase().match(/F|M/i)[0]
-    if(gender == "F"){
-        gender = "FEMALE"
+    if(!document.getElementById("genderDisable").classList.contains("clicked")){
+        let gender = line.match(/\(\s*M\s*\)|\(\s*F\s*\)/i)[0].toUpperCase().match(/F|M/i)[0]
+        if(gender == "F"){
+            gender = "FEMALE"
+        }
+        else if(gender == "M"){
+            gender = "MALE"
+        }
+        return `        ${document.getElementById("genderOutput").value.replace("${gender}", gender)},\n`
     }
-    else if(gender == "M"){
-        gender = "MALE"
-    }
-    return `        ${document.getElementById("genderOutput").value.replace("${gender}", gender)},\n`
+    return ""
 }
 
 function handleAbility(line){
-    let ability = line.match(/Ability:\s*(.*)/i)[1].toUpperCase().replaceAll(/\s/g, "_")
-    return `        ${document.getElementById("abilityOutput").value.replace("${ability}", ability)},\n`
+    if(!document.getElementById("abilityDisable").classList.contains("clicked")){
+        let ability = line.match(/Ability:\s*(.*)/i)[1].toUpperCase().replaceAll(/\s/g, "_")
+        return `        ${document.getElementById("abilityOutput").value.replace("${ability}", ability)},\n`
+    }
+    return ""
 }
 
 function handleLevel(line){
-    let level = line.match(/Level:\s*(\d+)/)[1]
-    return `        ${document.getElementById("levelOutput").value.replace("${level}", level)},\n`
+    if(!document.getElementById("levelDisable").classList.contains("clicked")){
+        let level = line.match(/Level:\s*(\d+)/)[1]
+        return `        ${document.getElementById("levelOutput").value.replace("${level}", level)},\n`
+    }
+    return ""
 }
 
 function handleShiny(line){
-    let shiny = "TRUE"
-    return `        ${document.getElementById("shinyOutput").value.replace("${shiny}", shiny)},\n`
+    if(!document.getElementById("shinyDisable").classList.contains("clicked")){
+        let shiny = "TRUE"
+        return `        ${document.getElementById("shinyOutput").value.replace("${shiny}", shiny)},\n`
+    }
+    return ""
 }
 
 function handleHappiness(line){
-    let happiness = line.match(/Happiness:\s*(\d+)/)[1]
-    return `        ${document.getElementById("happinessOutput").value.replace("${happiness}", happiness)},\n`
+    if(!document.getElementById("happinessDisable").classList.contains("clicked")){
+        let happiness = line.match(/Happiness:\s*(\d+)/)[1]
+        return `        ${document.getElementById("happinessOutput").value.replace("${happiness}", happiness)},\n`
+    }
+    return ""
 }
 
 function handleEVs(line){
-    let evs = [0, 0, 0, 0, 0, 0]
-    const statsRegex = /HP|Atk|Def|Spe|SpA|SpD/g
-    const evsOrder = document.getElementById("evsOrder").value.match(statsRegex)
-    const matchEVs = line.match(/\d+\s*\w+/g)
-    matchEVs.forEach(ev => {
-        let index = evsOrder.indexOf(ev.match(statsRegex)[0])
-        if(index == -1){
-            index = defaultSettings["input"]["evsOrder"].indexOf(ev.match(statsRegex)[0])
-            document.getElementById("evsOrder").value = defaultSettings["input"]["evsOrder"]
-        }
-        evs[index] = ev.match(/\d+/)[0]
-    })
-    return `        ${document.getElementById("evsOutput").value.replace("${evs}", evs).replaceAll(",", ", ")},\n`
+    if(!document.getElementById("evsDisable").classList.contains("clicked")){
+        let evs = [0, 0, 0, 0, 0, 0]
+        const statsRegex = /HP|Atk|Def|Spe|SpA|SpD/g
+        const evsOrder = document.getElementById("evsOrder").value.match(statsRegex)
+        const matchEVs = line.match(/\d+\s*\w+/g)
+        matchEVs.forEach(ev => {
+            let index = evsOrder.indexOf(ev.match(statsRegex)[0])
+            if(index == -1){
+                index = defaultSettings["input"]["evsOrder"].indexOf(ev.match(statsRegex)[0])
+                document.getElementById("evsOrder").value = defaultSettings["input"]["evsOrder"]
+            }
+            evs[index] = ev.match(/\d+/)[0]
+        })
+        return `        ${document.getElementById("evsOutput").value.replace("${evs}", evs).replaceAll(",", ", ")},\n`
+    }
+    return ""
 }
 
 function handleNature(line){
-    let nature = line.match(/\w+/)[0].toUpperCase()
-    return `        ${document.getElementById("natureOutput").value.replace("${nature}", nature)},\n`
+    if(!document.getElementById("natureDisable").classList.contains("clicked")){
+        let nature = line.match(/\w+/)[0].toUpperCase()
+        return `        ${document.getElementById("natureOutput").value.replace("${nature}", nature)},\n`
+    }
+    return ""
 }
 
 function handleIVs(line){
-    let ivs = [31, 31, 31, 31, 31, 31]
-    const statsRegex = /HP|Atk|Def|Spe|SpA|SpD/g
-    const ivsOrder = document.getElementById("ivsOrder").value.match(statsRegex)
-    const matchIVs = line.match(/\d+\s*\w+/g)
-    matchIVs.forEach(iv => {
-        let index = ivsOrder.indexOf(iv.match(statsRegex)[0])
-        if(index == -1){
-            index = defaultSettings["input"]["ivsOrder"].indexOf(iv.match(statsRegex)[0])
-            document.getElementById("ivsOrder").value = defaultSettings["input"]["ivsOrder"]
-        }
-        ivs[index] = iv.match(/\d+/)[0]
-    })
-    return `        ${document.getElementById("ivsOutput").value.replace("${ivs}", ivs).replaceAll(",", ", ")},\n`
+    if(!document.getElementById("ivsDisable").classList.contains("clicked")){
+        let ivs = [31, 31, 31, 31, 31, 31]
+        const statsRegex = /HP|Atk|Def|Spe|SpA|SpD/g
+        const ivsOrder = document.getElementById("ivsOrder").value.match(statsRegex)
+        const matchIVs = line.match(/\d+\s*\w+/g)
+        matchIVs.forEach(iv => {
+            let index = ivsOrder.indexOf(iv.match(statsRegex)[0])
+            if(index == -1){
+                index = defaultSettings["input"]["ivsOrder"].indexOf(iv.match(statsRegex)[0])
+                document.getElementById("ivsOrder").value = defaultSettings["input"]["ivsOrder"]
+            }
+            ivs[index] = iv.match(/\d+/)[0]
+        })
+        return `        ${document.getElementById("ivsOutput").value.replace("${ivs}", ivs).replaceAll(",", ", ")},\n`
+    }
+    return ""
 }
 
 function handleMoves(moves){
-    return `        ${document.getElementById("movesOutput").value.replace("${moves}", moves).replaceAll(",", ", ")},\n`
+    if(!document.getElementById("movesDisable").classList.contains("clicked")){
+        return `        ${document.getElementById("movesOutput").value.replace("${moves}", moves).replaceAll(",", ", ")},\n`
+    }
+    return ""
 }
 
 /*
