@@ -43,18 +43,11 @@ function applySettings(){
         applySettings()
     }
 
-    try{
-        Object.keys(defaultSettings["replace"]).forEach(settingName => {
-            document.getElementById(settingName).addEventListener("click", () => {
-                clickButton(settingName)
-            })
+    Object.keys(defaultSettings["replace"]).forEach(settingName => {
+        document.getElementById(settingName).addEventListener("click", () => {
+            clickButton(settingName)
         })
-    }
-    catch{
-        settings["replace"] = defaultSettings["replace"]
-        localStorage.setItem("SECsettings", JSON.stringify(settings))
-        applySettings()
-    }
+    })
 }
 
 function changeSetting(setting, enable = false, key){
@@ -87,16 +80,23 @@ function clickButton(settingName){
         }
     }
     else if(settingEl.classList.contains("replace")){
-        document.getElementById("replaceAreaContainer").classList.remove("hide")
-        document.getElementById("settingsContainer").classList.add("hide")
-        document.getElementById("replaceArea").value = settings["replace"][settingName]
+        try{
+            document.getElementById("replaceAreaContainer").classList.remove("hide")
+            document.getElementById("settingsContainer").classList.add("hide")
+            document.getElementById("replaceArea").value = settings["replace"][settingName]
 
-        document.getElementById("replaceAreaButton").addEventListener("click", () => {
-            document.getElementById("replaceAreaContainer").classList.add("hide")
-            document.getElementById("settingsContainer").classList.remove("hide")
-            settings["replace"][settingName] = document.getElementById("replaceArea").value
+            document.getElementById("replaceAreaButton").addEventListener("click", () => {
+                document.getElementById("replaceAreaContainer").classList.add("hide")
+                document.getElementById("settingsContainer").classList.remove("hide")
+                settings["replace"][settingName] = document.getElementById("replaceArea").value
+                localStorage.setItem("SECsettings", JSON.stringify(settings))
+            })
+        }
+        catch{
+            settings["replace"] = defaultSettings["replace"]
             localStorage.setItem("SECsettings", JSON.stringify(settings))
-        })
+            applySettings()
+        }
     }
 }
 
