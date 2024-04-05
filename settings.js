@@ -25,6 +25,11 @@ function applySettings(){
         applySettings()
     }
     try{
+        Object.keys(defaultSettings["input"]).forEach(key => {
+            if(document.getElementById(key)){
+                document.getElementById(key).value = defaultSettings["input"][key]
+            }
+        })
         Object.keys(settings["input"]).forEach(key => {
             if(document.getElementById(key)){
                 document.getElementById(key).value = settings["input"][key]
@@ -66,15 +71,27 @@ function applyCheckbox(settingName, enable = false, key){
     }
 }
 
-// setting name for blank output if absent: Auto Default
-
 const defaultSettings = {
 "checkbox": [], 
 "input": {
+    "nameOutput": ".species = SPECIES_${name}",
     "evsOrder": ["HP", "Atk", "Def", "Spe", "SpA", "SpD"], 
+    "ivsOrder": ["HP", "Atk", "Def", "Spe", "SpA", "SpD"], 
     "evsOutput": ".ev = TRAINER_PARTY_EVS(${evs})", 
-    "natureOutput": ".nature = NATURE_${nature}"}}
+    "ivsOutput": ".iv = TRAINER_PARTY_IVS(${ivs})", 
+    "movesOutput": ".moves = {${moves}}",
+    "levelOutput": ".lvl = ${level}",
+    "abilityOutput": ".ability = ABILITY_${ability}",
+    "itemOutput": ".heldItem = ITEM_${item}",
+    "natureOutput": ".nature = NATURE_${nature}",
+    "nicknameOutput": '.nickname = COMPOUND_STRING"${nickname}"',
+    "happinessOutput": ".friendship = ${happiness}",
+    "genderOutput": ".gender = TRAINER_MON_${gender}",
+    "shinyOutput": ".isShiny = ${shiny}"}
+}
 
 window.settings = defaultSettings
 
-applySettings()
+document.addEventListener("DOMContentLoaded", () => {
+    applySettings()
+})

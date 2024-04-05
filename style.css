@@ -59,16 +59,17 @@ textarea, input[type="text"] {
     text-align: center;
 }
 
-#trainerStructInput {
-    width: 25%;
-}
 
 #trainerStructName {
     width: 15%;
 }
 
-#evsOrder, #evsOutput, #natureOutput {
+input[type="text"]:not([required]) {
     width: 75%;
+}
+
+#trainerStructInput {
+    width: 25% !important;
 }
 
 .required::placeholder {
