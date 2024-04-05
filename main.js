@@ -113,31 +113,21 @@ document.getElementById("settingsButton").addEventListener("click", () => {
 
 
 
-document.getElementById("pasteAreaButton").addEventListener("click", () => {
-    document.getElementById("pasteAreaContainer").classList.add("hide")
-    document.getElementById("settingsContainer").classList.remove("hide")
-})
-
-document.getElementById("outputAreaButton").addEventListener("click", () => {
-    document.getElementById("outputAreaContainer").classList.add("hide")
-    document.getElementById("pasteAreaContainer").classList.remove("hide")
-})
-
-
-
-
-
-
-
-
-
-
 
 
 
 
 function handleName(line){
     if(!document.getElementById("nameDisable").classList.contains("clicked")){
+        settings["replace"]["nameReplace"].split("\n").forEach(string => {
+            if(/".+"\s*:\s*".+"/.test(string)){
+                const stringMatch = string.replaceAll("-", "_").match(/"(.+)"\s*:\s*"(.+)"/)
+                const regex = new RegExp(stringMatch[1], "i")
+                if(line.includes(stringMatch[1])){
+                    line = line.replace(regex, stringMatch[2])
+                }
+            }
+        })
         let name = line.replace(/\s*\(\s*M\s*\)\s*|\s*\(\s*F\s*\)\s*/i, "").replaceAll(/\s/g, "_").match(/(\w+)(?!.*\()|\((\w+)/)[0].match(/\w+/)[0].toUpperCase().replace(/_$/, "") // it is what it is ¯\_(ツ)_/¯
         return `        ${document.getElementById("nameOutput").value.replace("${name}", name)},\n`
     }
@@ -258,21 +248,3 @@ function handleMoves(moves){
     }
     return ""
 }
-
-/*
-species_replacements = {
-    "HO_OH": "Ho-Oh",
-    "PORYGON_Z": "Porygon-Z",
-    "TYPE_NULL": "Type: Null",
-    "JANGMO_O": "Jangmo-o",
-    "HAKAMO_O": "Hakamo-o",
-    "KOMMO_O": "Kommo-o",
-    "WO_CHIEN": "Wo-Chien",
-    "CHIEN_PAO": "Chien-Pao",
-    "TING_LU": "Ting-Lu",
-    "CHI_YU": "Chi-Yu",
-    "_ALOLAN": "-Alola",
-    "_GALARIAN": "-Galar",
-    "_HISUIAN": "-Hisui",
-}
-*/

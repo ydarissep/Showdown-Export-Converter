@@ -36,11 +36,18 @@ button[type="button"]{
     background: rgba(128, 127, 139, 0.01);
     outline: none;
     padding: 8px;
-    border: 2px solid var(--blue-border);
     border-radius: 12px;
     font-weight: 700;
     color: #f1f1f1;
     cursor: pointer;
+}
+
+button.disable {
+    border: 2px solid var(--blue-border);
+}
+
+button.replace {
+    border: 2px solid burlywood;
 }
 
 button[type='button']:hover {
@@ -60,13 +67,13 @@ textarea, input[type="text"] {
     border: 2px solid black;
 }
 
-#pasteArea, #outputArea {
+#pasteArea, #outputArea, #replaceArea {
     margin: 5vh 0 0 15%;
     width: 70%;
     height: 75vh;
 }
 
-#pasteAreaButton, #outputAreaButton {
+#pasteAreaButton, #outputAreaButton, #replaceAreaButton {
     margin: max(3vh, 50px) 0px 0px 50%;
     width: 7vw;
     height: 3vh;

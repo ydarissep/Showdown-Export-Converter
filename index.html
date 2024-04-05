@@ -17,15 +17,22 @@
 
 
 <body id="body">
+  <div id="replaceAreaContainer" class="hide">
+    <textarea id="replaceArea" placeholder='"This-is": "an_example"&#10;"This is":"another_example"&#10;Replace the string on the LEFT by the string on the RIGHT.&#10;Note that all "-" are automatically replaced by "_".' spellcheck="false" autocomplete="off"></textarea>
+    <div>
+      <button id="replaceAreaButton">OK</button>
+    </div>
+  </div>
+
   <div id="pasteAreaContainer">
-    <textarea id="pasteArea" placeholder="Paste your showdown team here." autocomplete="off"></textarea>
+    <textarea id="pasteArea" placeholder="Paste your showdown team here." spellcheck="false" autocomplete="off"></textarea>
     <div>
       <button id="pasteAreaButton">OK</button>
     </div>
   </div>
 
   <div id="outputAreaContainer" class="hide">
-    <textarea id="outputArea" placeholder="Wtf are you doing?" autocomplete="off"></textarea>
+    <textarea id="outputArea" placeholder="Wtf are you doing?" spellcheck="false" autocomplete="off"></textarea>
     <div>
       <button id="outputAreaButton">OK</button>
     </div>
@@ -49,6 +56,7 @@
         <input type="text" id="nameOutput">
       </span>
       <span>
+        <button type="button" class="replace" id="nameReplace">Replace</button>
         <button type="button" class="disable" id="nameDisable">Disable</button>
       </span>
     </fieldset>
