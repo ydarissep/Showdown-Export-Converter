@@ -3,45 +3,26 @@ function applySettings(){
         settings = JSON.parse(localStorage.getItem("SECsettings"))
     }
 
-    try{
-        settings["button"].forEach(settingName => {
-            clickButton(settingName)
-        })
+    settings["button"].forEach(settingName => {
+        clickButton(settingName)
+    })
 
-        document.querySelectorAll('button[type="button"]').forEach(button => {
-            if(button.id){
-                button.addEventListener("click", () => {
-                    clickButton(button.id)
-                })
-                if(settings["button"].includes(button.id)){
-                    button.classList.add("clicked")
-                }
+    document.querySelectorAll('button[type="button"]').forEach(button => {
+        if(button.id){
+            button.addEventListener("click", () => {
+                clickButton(button.id)
+            })
+            if(settings["button"].includes(button.id)){
+                button.classList.add("clicked")
             }
-        })
-    }
-    catch{
-        settings["button"] = defaultSettings["button"]
-        localStorage.setItem("SECsettings", JSON.stringify(settings))
-        applySettings()
-    }
+        }
+    })
 
-    try{
-        Object.keys(defaultSettings["input"]).forEach(key => {
-            if(document.getElementById(key)){
-                document.getElementById(key).value = defaultSettings["input"][key]
-            }
-        })
-        Object.keys(settings["input"]).forEach(key => {
-            if(document.getElementById(key)){
-                document.getElementById(key).value = settings["input"][key]
-            }
-        })
-    }
-    catch{
-        settings["input"] = defaultSettings["input"]
-        localStorage.setItem("SECsettings", JSON.stringify(settings))
-        applySettings()
-    }
+    Object.keys(settings["input"]).forEach(key => {
+        if(document.getElementById(key)){
+            document.getElementById(key).value = settings["input"][key]
+        }
+    })
 
     Object.keys(defaultSettings["replace"]).forEach(settingName => {
         document.getElementById(settingName).addEventListener("click", () => {
@@ -80,43 +61,68 @@ function clickButton(settingName){
         }
     }
     else if(settingEl.classList.contains("replace")){
-        try{
-            document.getElementById("replaceAreaContainer").classList.remove("hide")
-            document.getElementById("settingsContainer").classList.add("hide")
-            document.getElementById("replaceArea").value = settings["replace"][settingName]
-
-            document.getElementById("replaceAreaButton").addEventListener("click", () => {
-                document.getElementById("replaceAreaContainer").classList.add("hide")
-                document.getElementById("settingsContainer").classList.remove("hide")
-                settings["replace"][settingName] = document.getElementById("replaceArea").value
-                localStorage.setItem("SECsettings", JSON.stringify(settings))
-            })
-        }
-        catch{
-            settings["replace"] = defaultSettings["replace"]
-            localStorage.setItem("SECsettings", JSON.stringify(settings))
-            applySettings()
+        document.getElementById("replaceAreaContainer").classList.remove("hide")
+        document.getElementById("settingsContainer").classList.add("hide")
+        document.getElementById("replaceArea").value = settings["replace"][settingName]
+        settingEl.classList.add("replaceActive")
+    }
+    else if(settingEl.classList.contains("default")){
+        settingEl.classList.toggle("clicked")
+        changeSetting(settingName, settingEl.classList.contains("clicked"), "button")
+        const inputEl = document.getElementById(settingName.replace(/Button$/, "Input"))
+        if(inputEl){
+            if(settings["button"].includes(settingName)){
+                inputEl.classList.remove("hideDefaultInput")
+            }
+            else{
+                inputEl.classList.add("hideDefaultInput")
+            }
         }
     }
 }
 
+const settingsVer = 1
 const defaultSettings = {
-"button": [], 
+"button": [
+    "nicknameDisable",
+    "happinessDisable",
+    "genderDisable",
+    "shinyDisable",
+    "teraDisable",
+    "ivsDefaultButton", 
+    "evsDefaultButton", 
+    "levelDefaultButton", 
+    "natureDefaultButton"], 
 "input": {
     "nameOutput": ".species = SPECIES_${name}",
-    "evsOrder": ["HP", "Atk", "Def", "Spe", "SpA", "SpD"], 
-    "ivsOrder": ["HP", "Atk", "Def", "Spe", "SpA", "SpD"], 
+    "evsOrder": ["HP", " Atk", " Def", " Spe", " SpA", " SpD"], 
+    "ivsOrder": ["HP", " Atk", " Def", " Spe", " SpA", " SpD"], 
     "evsOutput": ".ev = TRAINER_PARTY_EVS(${evs})", 
     "ivsOutput": ".iv = TRAINER_PARTY_IVS(${ivs})", 
-    "movesOutput": ".moves = {${moves}}",
     "levelOutput": ".lvl = ${level}",
+    "natureOutput": ".nature = NATURE_${nature}",
+    "movesOutput": ".moves = {${moves}}",
     "abilityOutput": ".ability = ABILITY_${ability}",
     "itemOutput": ".heldItem = ITEM_${item}",
-    "natureOutput": ".nature = NATURE_${nature}",
     "nicknameOutput": '.nickname = COMPOUND_STRING("${nickname}")',
     "happinessOutput": ".friendship = ${happiness}",
     "genderOutput": ".gender = TRAINER_MON_${gender}",
-    "shinyOutput": ".isShiny = ${shiny}"},
+    "shinyOutput": ".isShiny = ${shiny}",
+    "teraOutput": ".tera = TYPE_${tera}",
+
+    "nameDefaultInput": "NONE",
+    "evsDefaultInput": "0, 0, 0, 0, 0, 0",
+    "ivsDefaultInput": "31, 31, 31, 31, 31, 31",
+    "levelDefaultInput": 100,
+    "natureDefaultInput": "SERIOUS",
+    "movesDefaultInput": "MOVE_NONE, MOVE_NONE, MOVE_NONE, MOVE_NONE",
+    "abilityDefaultInput": "NONE",
+    "itemDefaultInput": "NONE",
+    "nicknameDefaultInput": "Idk",
+    "happinessDefaultInput": 255,
+    "genderDefaultInput": "MALE",
+    "shinyDefaultInput": "FALSE",
+    "teraDefaultInput": "NONE"},
 "replace": {"nameReplace": `"Type: Null": "TYPE_NULL"
 "Farfetch’d": "FARFETCHD"
 "Sirfetch'd": "SIRFETCHD"
@@ -128,12 +134,19 @@ const defaultSettings = {
 "-Galar": "_GALARIAN"
 "-Hisui": "_HISUIAN"
 "-Paldea": "_PALDEAN"
-"-Mega": ""`}
+"-Mega-X": ""
+"-Mega-Y": ""
+"-Mega": ""`,
+"abilityReplace": ``,
+"movesReplace": ``,
+"itemReplace": ``}
 }
 
 window.settings = defaultSettings
 
 document.addEventListener("DOMContentLoaded", () => {
+    forceUpdate()
+
     applySettings()
 
     document.getElementById("pasteAreaButton").addEventListener("click", () => {
@@ -142,7 +155,24 @@ document.addEventListener("DOMContentLoaded", () => {
     })
     
     document.getElementById("outputAreaButton").addEventListener("click", () => {
+        document.getElementById("pasteArea").value = ""
+        document.getElementById("copyToClipboardStatus").innerText = ""
         document.getElementById("outputAreaContainer").classList.add("hide")
         document.getElementById("pasteAreaContainer").classList.remove("hide")
     })
+
+    document.getElementById("replaceAreaButton").addEventListener("click", () => {
+        document.getElementById("replaceAreaContainer").classList.add("hide")
+        document.getElementById("settingsContainer").classList.remove("hide")
+        settings["replace"][document.getElementsByClassName("replaceActive")[0].id] = document.getElementById("replaceArea").value
+        localStorage.setItem("SECsettings", JSON.stringify(settings))
+        document.getElementsByClassName("replaceActive")[0].classList.remove("replaceActive")
+    })
 })
+
+function forceUpdate(){
+    if(localStorage.getItem("SECsettingsVer") != `${settingsVer}`){
+        localStorage.removeItem("SECsettings")
+        localStorage.setItem("SECsettingsVer", `${settingsVer}`)
+    }
+}

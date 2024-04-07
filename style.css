@@ -28,12 +28,12 @@ body {
     background: #1f2023;
 }
 
-.hide {
+.hide, .hideDefaultInput {
     display: none !important;
 }
 
 button[type="button"]{
-    background: rgba(128, 127, 139, 0.01);
+    background: rgba(0, 0, 0, 0.5);
     outline: none;
     padding: 8px;
     border-radius: 12px;
@@ -46,16 +46,21 @@ button.disable {
     border: 2px solid var(--blue-border);
 }
 
+button.default {
+    border: 2px solid darkgreen;
+}
+
 button.replace {
     border: 2px solid burlywood;
 }
 
 button[type='button']:hover {
-    background: rgba(255, 255, 255, 0.25);
+    background: rgba(255, 255, 255, 0.2) !important;
 }
 
 .clicked {
-    background: rgba(255, 255, 255, 0.125) !important;
+    background: rgba(255, 255, 255, 0.1) !important;
+    font-weight: 700;
 }
 
 textarea, input[type="text"] {
@@ -63,24 +68,13 @@ textarea, input[type="text"] {
     background: #0a0a0b;
     color: white;
     font-size: 1.1rem;
-    font-family: Arial;
-    border: 2px solid black;
+    border: 2px solid #555;
 }
 
 #pasteArea, #outputArea, #replaceArea {
     margin: 5vh 0 0 15%;
     width: 70%;
     height: 75vh;
-}
-
-#pasteAreaButton, #outputAreaButton, #replaceAreaButton {
-    margin: max(3vh, 50px) 0px 0px 50%;
-    width: 7vw;
-    height: 3vh;
-    min-width: 100px;
-    min-height: 50px;
-    position: absolute;
-    transform: translate(-50%, -50%);
 }
 
 #settingsContainer {
@@ -94,30 +88,51 @@ fieldset span:last-child {
 }
 
 #trainerStructName {
-    width: 15%;
+    width: 25%;
 }
 
 input[type="text"]:not([required]) {
     width: 75%;
 }
 
+input[id*="DefaultInput"] {
+    width: max(25%, 60px) !important;
+}
+
 #trainerStructInput {
-    width: 25% !important;
+    width: 35% !important;
 }
 
 .required::placeholder {
     color: red;
 }
 
-#settingsButton{
-    margin-top: max(3vh, 25px);
+#settingsButton, #pasteAreaButton, #outputAreaButton, #replaceAreaButton {
+    margin: 2% auto 2% auto;
     width: 7vw;
     height: 3vh;
-    min-width: 50px;
-    min-height: 25px;
+    min-width: 100px;
+    min-height: 50px;
 }
 
-fieldset{
+.sticky {
+    position: sticky;
+    top: 0;
+    background: #1f2023;
+}
+
+legend {
+    color: bisque;
+}
+
+label {
+    width: max(10%, 70px);
+    display: inline-block;
+    text-align: right !important;
+    margin: 5px 0px 5px 0px;
+}
+
+fieldset {
     display:-webkit-flex;
     -webkit-justify-content:center;
 
@@ -129,4 +144,12 @@ fieldset{
 fieldset span{
     -webkit-flex:1;
     flex:1;
+}
+
+.textAlign {
+    text-align: center;
+}
+
+#copyToClipboardStatus {
+    color: lime;
 }

@@ -7,7 +7,7 @@
   <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate" />
   <meta http-equiv="Pragma" content="no-cache" />
   <meta http-equiv="Expires" content="0" />
-  <title>Test</title>
+  <title>SH Export Converter</title>
   <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto+Condensed:Regular 400,Bold 700|Pragati+Narrow:400,700">
   <link rel="icon" type="favicon" href="https://raw.githubusercontent.com/ydarissep/Dex-Helper/main/Pok%C3%A9_Ball_icon.ico">
   <link rel="stylesheet" href="style.css">
@@ -18,27 +18,31 @@
 
 <body id="body">
   <div id="replaceAreaContainer" class="hide">
-    <textarea id="replaceArea" placeholder='"This-is": "an_example"&#10;"This is":"another_example"&#10;Replace the string on the LEFT by the string on the RIGHT.&#10;Note that all "-" are automatically replaced by "_".' spellcheck="false" autocomplete="off"></textarea>
-    <div>
+    <div class="textAlign">
       <button id="replaceAreaButton">OK</button>
     </div>
+    <textarea id="replaceArea" placeholder='"This-is": "an_example"&#10;"This is":"another_example"&#10;Replace the string on the LEFT by the string on the RIGHT.' spellcheck="false" autocomplete="off"></textarea>
   </div>
 
   <div id="pasteAreaContainer">
-    <textarea id="pasteArea" placeholder="Paste your showdown team here." spellcheck="false" autocomplete="off"></textarea>
-    <div>
+    <div class="textAlign">
       <button id="pasteAreaButton">OK</button>
     </div>
+    <textarea id="pasteArea" placeholder="Paste your showdown team here." spellcheck="false" autocomplete="off"></textarea>
   </div>
 
   <div id="outputAreaContainer" class="hide">
-    <textarea id="outputArea" placeholder="Wtf are you doing?" spellcheck="false" autocomplete="off"></textarea>
-    <div>
+    <div class="textAlign">
       <button id="outputAreaButton">OK</button>
+      <div id="copyToClipboardStatus"></div>
     </div>
+    <textarea id="outputArea" placeholder="Wtf are you doing?" spellcheck="false" autocomplete="off"></textarea>
   </div>
 
   <div id="settingsContainer" class="hide">
+    <div class="sticky">
+      <button id="settingsButton">OK</button>
+    </div>
     <fieldset id="createTrainerStructContainer">
       <legend for="createTrainerStructContainer">Trainer Struct Settings</legend>
       <span>
@@ -56,46 +60,48 @@
         <input type="text" id="nameOutput">
       </span>
       <span>
+        <span class="defaultContainer">
+          <button type="button" class="default" id="nameDefaultButton">Default</button>
+          <input type="text" id="nameDefaultInput" class="hideDefaultInput">
+        </span>
         <button type="button" class="replace" id="nameReplace">Replace</button>
         <button type="button" class="disable" id="nameDisable">Disable</button>
       </span>
     </fieldset>
     <fieldset id="evsSettingsContainer">
       <legend for="evsSettingsContainer">EVs Settings</legend>
-      <span id="evsOrderContainer">
-        <label for="evsOrder">Order:</label>
-        <input type="text" id="evsOrder">
-      </span>
       <span id="evsOutputContainer">
         <label for="evsOutput">Output:</label>
         <input type="text" id="evsOutput">
       </span>
+      <span id="evsOrderContainer">
+        <label for="evsOrder">Order:</label>
+        <input type="text" id="evsOrder">
+      </span>
       <span>
+        <span class="defaultContainer">
+          <button type="button" class="default" id="evsDefaultButton">Default</button>
+          <input type="text" id="evsDefaultInput" class="hideDefaultInput">
+        </span>
         <button type="button" class="disable" id="evsDisable">Disable</button>
       </span>
     </fieldset>
     <fieldset id="ivsSettingsContainer">
       <legend for="ivsSettingsContainer">IVs Settings</legend>
-      <span id="ivsOrderContainer">
-        <label for="ivsOrder">Order:</label>
-        <input type="text" id="ivsOrder">
-      </span>
       <span id="ivsOutputContainer">
         <label for="ivsOutput">Output:</label>
         <input type="text" id="ivsOutput">
       </span>
+      <span id="ivsOrderContainer">
+        <label for="ivsOrder">Order:</label>
+        <input type="text" id="ivsOrder">
+      </span>
       <span>
+        <span class="defaultContainer">
+          <button type="button" class="default" id="ivsDefaultButton">Default</button>
+          <input type="text" id="ivsDefaultInput" class="hideDefaultInput">
+        </span>
         <button type="button" class="disable" id="ivsDisable">Disable</button>
-      </span>
-    </fieldset>
-    <fieldset id="movesSettingsContainer">
-      <legend for="movesSettingsContainer">Moves Settings</legend>
-      <span id="movesOutputContainer">
-        <label for="movesOutput">Output:</label>
-        <input type="text" id="movesOutput">
-      </span>
-      <span>
-        <button type="button" class="disable" id="movesDisable">Disable</button>
       </span>
     </fieldset>
     <fieldset id="levelSettingsContainer">
@@ -105,7 +111,40 @@
         <input type="text" id="levelOutput">
       </span>
       <span>
+        <span class="defaultContainer">
+          <button type="button" class="default" id="levelDefaultButton">Default</button>
+          <input type="text" id="levelDefaultInput" class="hideDefaultInput">
+        </span>
         <button type="button" class="disable" id="levelDisable">Disable</button>
+      </span>
+    </fieldset>
+    <fieldset id="natureSettingsContainer">
+      <legend for="natureSettingsContainer">Nature Settings</legend>
+      <span id="natureOutputContainer">
+        <label for="natureOutput">Output:</label>
+        <input type="text" id="natureOutput">
+      </span>
+      <span>
+        <span class="defaultContainer">
+          <button type="button" class="default" id="natureDefaultButton">Default</button>
+          <input type="text" id="natureDefaultInput" class="hideDefaultInput">
+        </span>
+        <button type="button" class="disable" id="natureDisable">Disable</button>
+      </span>
+    </fieldset>
+    <fieldset id="movesSettingsContainer">
+      <legend for="movesSettingsContainer">Moves Settings</legend>
+      <span id="movesOutputContainer">
+        <label for="movesOutput">Output:</label>
+        <input type="text" id="movesOutput">
+      </span>
+      <span>
+        <span class="defaultContainer">
+          <button type="button" class="default" id="movesDefaultButton">Default</button>
+          <input type="text" id="movesDefaultInput" class="hideDefaultInput">
+        </span>
+        <button type="button" class="replace" id="movesReplace">Replace</button>
+        <button type="button" class="disable" id="movesDisable">Disable</button>
       </span>
     </fieldset>
     <fieldset id="abilitySettingsContainer">
@@ -115,6 +154,11 @@
         <input type="text" id="abilityOutput">
       </span>
       <span>
+        <span class="defaultContainer">
+          <button type="button" class="default" id="abilityDefaultButton">Default</button>
+          <input type="text" id="abilityDefaultInput" class="hideDefaultInput">
+        </span>
+        <button type="button" class="replace" id="abilityReplace">Replace</button>
         <button type="button" class="disable" id="abilityDisable">Disable</button>
       </span>
     </fieldset>
@@ -125,17 +169,12 @@
         <input type="text" id="itemOutput">
       </span>
       <span>
+        <span class="defaultContainer">
+          <button type="button" class="default" id="itemDefaultButton">Default</button>
+          <input type="text" id="itemDefaultInput" class="hideDefaultInput">
+        </span>
+        <button type="button" class="replace" id="itemReplace">Replace</button>
         <button type="button" class="disable" id="itemDisable">Disable</button>
-      </span>
-    </fieldset>
-    <fieldset id="natureSettingsContainer">
-      <legend for="natureSettingsContainer">Nature Settings</legend>
-      <span id="natureOutputContainer">
-        <label for="natureOutput">Output:</label>
-        <input type="text" id="natureOutput">
-      </span>
-      <span>
-        <button type="button" class="disable" id="natureDisable">Disable</button>
       </span>
     </fieldset>
     <fieldset id="nicknameSettingsContainer">
@@ -145,6 +184,10 @@
         <input type="text" id="nicknameOutput">
       </span>
       <span>
+        <span class="defaultContainer">
+          <button type="button" class="default" id="nicknameDefaultButton">Default</button>
+          <input type="text" id="nicknameDefaultInput" class="hideDefaultInput">
+        </span>
         <button type="button" class="disable" id="nicknameDisable">Disable</button>
       </span>
     </fieldset>
@@ -155,6 +198,10 @@
         <input type="text" id="happinessOutput">
       </span>
       <span>
+        <span class="defaultContainer">
+          <button type="button" class="default" id="happinessDefaultButton">Default</button>
+          <input type="text" id="happinessDefaultInput" class="hideDefaultInput">
+        </span>
         <button type="button" class="disable" id="happinessDisable">Disable</button>
       </span>
     </fieldset>
@@ -165,6 +212,10 @@
         <input type="text" id="genderOutput">
       </span>
       <span>
+        <span class="defaultContainer">
+          <button type="button" class="default" id="genderDefaultButton">Default</button>
+          <input type="text" id="genderDefaultInput" class="hideDefaultInput">
+        </span>
         <button type="button" class="disable" id="genderDisable">Disable</button>
       </span>
     </fieldset>
@@ -175,12 +226,27 @@
         <input type="text" id="shinyOutput">
       </span>
       <span>
+        <span class="defaultContainer">
+          <button type="button" class="default" id="shinyDefaultButton">Default</button>
+          <input type="text" id="shinyDefaultInput" class="hideDefaultInput">
+        </span>
         <button type="button" class="disable" id="shinyDisable">Disable</button>
       </span>
     </fieldset>
-    <div>
-      <button id="settingsButton">OK</button>
-    </div>
+    <fieldset id="teraSettingsContainer">
+      <legend for="teraSettingsContainer">Tera Settings</legend>
+      <span id="teraOutputContainer">
+        <label for="teraOutput">Output:</label>
+        <input type="text" id="teraOutput">
+      </span>
+      <span>
+        <span class="defaultContainer">
+          <button type="button" class="default" id="teraDefaultButton">Default</button>
+          <input type="text" id="shinyDefaultInput" class="hideDefaultInput">
+        </span>
+        <button type="button" class="disable" id="teraDisable">Disable</button>
+      </span>
+    </fieldset>
   </div>
 </body>
 </html>
