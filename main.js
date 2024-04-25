@@ -89,18 +89,20 @@ document.getElementById("settingsButton").addEventListener("click", () => {
         
         document.getElementById("outputArea").value = finalString
 
-        try{
-            navigator.clipboard.writeText(finalString).then(() => {
-                copyToClipboardStatus.innerText = "Copied to clipboard!"
-            })
-        }
-        catch(e){
+        if(finalString !== ""){
             try{
-                copyToClipboard(finalString)
-                copyToClipboardStatus.innerText = "Copied to clipboard!"
+                navigator.clipboard.writeText(finalString).then(() => {
+                    copyToClipboardStatus.innerText = "Copied to clipboard!"
+                })
             }
             catch(e){
-                console.log(e)
+                try{
+                    copyToClipboard(finalString)
+                    copyToClipboardStatus.innerText = "Copied to clipboard!"
+                }
+                catch(e){
+                    console.log(e)
+                }
             }
         }
 
