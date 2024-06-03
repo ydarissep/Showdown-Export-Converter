@@ -150,7 +150,7 @@ function handleCheck(check){
                 if(disableEl){
                     disableb = disableEl.classList.contains("clicked")
                 }
-                if(!disableb){
+                if(disableb === false){
                     const outputEl = document.getElementById(`${field}Output`)
                     const defaultEl = document.getElementById(`${field}DefaultInput`)
                     if(outputEl && defaultEl){
