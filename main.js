@@ -145,10 +145,17 @@ function handleCheck(check){
         if(el.id){
             const field = el.id.replace("DefaultButton", "")
             if(!check[field]){
-                const outputEl = document.getElementById(`${field}Output`)
-                const defaultEl = document.getElementById(`${field}DefaultInput`)
-                if(outputEl && defaultEl){
-                    string += `        ${outputEl.value.replace(`\${${field}}`, defaultEl.value)},\n`
+                const disableEl = document.getElementById(`${field}Disable`)
+                let disableb = false
+                if(disableEl){
+                    disableb = disableEl.classList.contains("clicked")
+                }
+                if(!disableb){
+                    const outputEl = document.getElementById(`${field}Output`)
+                    const defaultEl = document.getElementById(`${field}DefaultInput`)
+                    if(outputEl && defaultEl){
+                        string += `        ${outputEl.value.replace(`\${${field}}`, defaultEl.value)},\n`
+                    }
                 }
             }
         }
